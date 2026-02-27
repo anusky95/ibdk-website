@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBDK — Institute of Breast Disease, Kolkata</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --pink: #E8528A;
+    --pink-light: #F4A7C3;
+    --pink-pale: #FDE8F0;
+    --pink-deep: #C73070;
+    --white: #FFFFFF;
+    --off-white: #F9F4F6;
+    --grey: #6B6B6B;
+    --dark: #1A1A1A;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 72px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(232,82,138,0.12);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    display: flex; flex-direction: column; line-height: 1;
+  }
+  .nav-logo .ibdk {
+    font-family: var(--font-display);
+    font-size: 26px;
+    letter-spacing: 0.08em;
+    color: var(--pink);
+  }
+  .nav-logo .sub {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+    font-weight: 400;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--pink); }
+
+  .nav-donate {
+    background: var(--pink);
+    color: white !important;
+    padding: 10px 24px !important;
+    border-radius: 2px;
+    transition: background 0.2s !important;
+  }
+  .nav-donate:hover { background: var(--pink-deep) !important; color: white !important; }
+
+  .nav-toggle {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 4px;
+  }
+  .nav-toggle span {
+    width: 24px; height: 2px; background: var(--dark);
+    display: block; transition: all 0.3s;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 5vw 80px 8vw;
+    position: relative;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 28px;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--pink);
+    display: block;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(44px, 5vw, 76px);
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    color: var(--dark);
+    margin-bottom: 28px;
+  }
+  .hero h1 span { color: var(--pink); }
+
+  .hero-sub {
+    font-family: var(--font-serif);
+    font-size: clamp(16px, 1.5vw, 20px);
+    line-height: 1.7;
+    color: var(--grey);
+    font-style: italic;
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--pink);
+    color: white;
+    padding: 14px 36px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn-primary:hover { background: var(--pink-deep); transform: translateY(-1px); }
+
+  .btn-outline {
+    border: 1.5px solid var(--dark);
+    color: var(--dark);
+    padding: 14px 36px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn-outline:hover { border-color: var(--pink); color: var(--pink); }
+
+  .hero-right {
+    position: relative;
+    background: var(--pink-pale);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-visual {
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .hero-bg-text {
+    font-family: var(--font-display);
+    font-size: clamp(120px, 18vw, 240px);
+    color: rgba(232,82,138,0.08);
+    position: absolute;
+    letter-spacing: 0.05em;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .hero-stat-block {
+    position: relative; z-index: 2;
+    display: grid; grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    width: 80%; max-width: 380px;
+  }
+
+  .hero-stat {
+    background: white;
+    padding: 32px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-stat:nth-child(2) { background: var(--pink); }
+  .hero-stat:nth-child(2) .stat-num,
+  .hero-stat:nth-child(2) .stat-label { color: white; }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: clamp(44px, 5vw, 64px);
+    color: var(--pink);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  .hero-quote {
+    position: absolute;
+    bottom: 40px; left: 40px; right: 40px;
+    z-index: 3;
+  }
+  .hero-quote blockquote {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--grey);
+    padding-left: 20px;
+    border-left: 2px solid var(--pink);
+  }
+
+  /* ─── TICKER ─── */
+  .ticker {
+    background: var(--pink);
+    color: white;
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-flex; gap: 60px;
+    animation: ticker 30s linear infinite;
+  }
+  .ticker-item {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .ticker-item::after {
+    content: '✦';
+    font-size: 8px;
+    opacity: 0.6;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 100px 8vw; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; max-width: 40px;
+    height: 1px; background: var(--pink);
+  }
+
+  h2.display {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    margin-bottom: 24px;
+  }
+  h2.display span { color: var(--pink); }
+
+  p.lead {
+    font-family: var(--font-serif);
+    font-size: clamp(16px, 1.4vw, 19px);
+    line-height: 1.75;
+    color: var(--grey);
+    font-style: italic;
+    max-width: 640px;
+  }
+
+  /* ─── WHY IBDK ─── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 64px;
+  }
+
+  .why-left {
+    background: var(--pink);
+    padding: 64px;
+    color: white;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+
+  .why-big-num {
+    font-family: var(--font-display);
+    font-size: 120px;
+    line-height: 1;
+    color: rgba(255,255,255,0.15);
+    margin-bottom: 24px;
+  }
+
+  .why-stat-big {
+    font-family: var(--font-display);
+    font-size: 56px;
+    line-height: 1;
+    color: white;
+  }
+
+  .why-stat-label {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.8);
+    margin-top: 12px;
+    max-width: 260px;
+  }
+
+  .why-right {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    border: 1px solid rgba(232,82,138,0.15);
+  }
+
+  .why-item {
+    padding: 36px 48px;
+    border-bottom: 1px solid rgba(232,82,138,0.12);
+    display: flex; align-items: flex-start; gap: 24px;
+    transition: background 0.2s;
+  }
+  .why-item:last-child { border-bottom: none; }
+  .why-item:hover { background: var(--pink-pale); }
+
+  .why-icon {
+    width: 44px; height: 44px;
+    background: var(--pink-pale);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .why-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .why-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--grey);
+  }
+
+  /* ─── APPROACH ─── */
+  .approach-section { background: var(--off-white); }
+
+  .approach-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-bottom: 72px;
+  }
+
+  .studies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .study-card {
+    background: white;
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s;
+  }
+  .study-card:hover { transform: translateY(-4px); }
+  .study-card:nth-child(odd) { background: var(--pink); }
+  .study-card:nth-child(odd) .study-num,
+  .study-card:nth-child(odd) .study-title,
+  .study-card:nth-child(odd) .study-desc { color: white; }
+  .study-card:nth-child(odd) .study-finding { color: rgba(255,255,255,0.75); border-color: rgba(255,255,255,0.3); }
+
+  .study-num {
+    font-family: var(--font-display);
+    font-size: 64px;
+    color: rgba(26,26,26,0.08);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .study-card:nth-child(odd) .study-num { color: rgba(255,255,255,0.15); }
+
+  .study-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    color: var(--dark);
+  }
+  .study-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--grey);
+    margin-bottom: 16px;
+  }
+  .study-finding {
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--grey);
+    border-top: 1px solid rgba(232,82,138,0.2);
+    padding-top: 12px;
+  }
+  .study-finding strong { color: var(--pink); font-weight: 600; }
+  .study-card:nth-child(odd) .study-finding strong { color: rgba(255,255,255,0.9); }
+
+  /* ─── TOOLS ─── */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  .tool-card {
+    border: 1px solid rgba(232,82,138,0.18);
+    padding: 40px 32px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--pink);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .tool-card:hover { border-color: var(--pink); }
+  .tool-card:hover::before { transform: scaleX(1); }
+
+  .tool-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.05em;
+    color: var(--pink);
+    margin-bottom: 12px;
+  }
+  .tool-desc {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--grey);
+  }
+  .tool-tag {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--pink-pale);
+    color: var(--pink);
+    padding: 4px 10px;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  /* ─── BCRADS ─── */
+  .bcrads-section {
+    background: var(--dark);
+    color: white;
+  }
+  .bcrads-section .section-label { color: var(--pink-light); }
+  .bcrads-section .section-label::after { background: var(--pink-light); }
+  .bcrads-section p.lead { color: rgba(255,255,255,0.6); }
+
+  .bcrads-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 56px;
+    align-items: start;
+  }
+
+  .scoring-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+  }
+  .scoring-table th {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-weight: 500;
+  }
+  .scoring-table td {
+    padding: 16px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .score-cat {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--pink-light);
+  }
+  .score-interp {
+    font-weight: 500;
+    color: white;
+  }
+  .score-score { color: rgba(255,255,255,0.7); }
+
+  .bcrads-matters {
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .bcrads-matter-item {
+    display: flex; gap: 20px; align-items: flex-start;
+  }
+  .matter-num {
+    font-family: var(--font-display);
+    font-size: 32px;
+    color: var(--pink);
+    flex-shrink: 0;
+    line-height: 1;
+    width: 36px;
+  }
+  .matter-text h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 4px;
+  }
+  .matter-text p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .award-badge {
+    margin-top: 40px;
+    background: rgba(232,82,138,0.12);
+    border: 1px solid rgba(232,82,138,0.3);
+    padding: 28px 32px;
+    display: flex; gap: 20px; align-items: flex-start;
+  }
+  .award-icon { font-size: 28px; }
+  .award-text h4 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    color: var(--pink-light);
+    margin-bottom: 6px;
+  }
+  .award-text p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* ─── OUTREACH ─── */
+  .outreach-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 56px;
+  }
+
+  .outreach-big {
+    background: var(--pink);
+    padding: 64px;
+    color: white;
+  }
+  .outreach-big .big-num {
+    font-family: var(--font-display);
+    font-size: 96px;
+    line-height: 1;
+    color: white;
+    margin-bottom: 8px;
+  }
+  .outreach-big .big-label {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 40px;
+    font-weight: 500;
+  }
+  .outreach-big p {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .outreach-list {
+    background: var(--off-white);
+    padding: 64px;
+    display: flex; flex-direction: column; gap: 0;
+  }
+
+  .outreach-item {
+    display: flex; align-items: flex-start; gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(232,82,138,0.12);
+  }
+  .outreach-item:last-child { border-bottom: none; }
+
+  .outreach-num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    color: var(--pink-light);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .outreach-content h4 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .outreach-content p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--grey);
+  }
+
+  /* ─── TEAM ─── */
+  .team-section { background: var(--off-white); }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2px;
+    margin-top: 56px;
+  }
+
+  .team-card {
+    background: white;
+    padding: 40px 36px;
+    transition: transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .team-card:hover { transform: translateY(-3px); }
+  .team-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--pink);
+  }
+
+  .team-role {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .team-name {
+    font-family: var(--font-display);
+    font-size: 24px;
+    letter-spacing: 0.03em;
+    color: var(--dark);
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+  .team-bio {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--grey);
+  }
+
+  /* ─── ACHIEVEMENTS ─── */
+  .ach-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    margin-top: 56px;
+  }
+
+  .ach-card {
+    padding: 40px 36px;
+    background: white;
+    border: 1px solid rgba(232,82,138,0.1);
+    transition: all 0.25s;
+  }
+  .ach-card:hover {
+    background: var(--pink-pale);
+    border-color: var(--pink);
+  }
+
+  .ach-icon { font-size: 28px; margin-bottom: 20px; display: block; }
+  .ach-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+  .ach-desc {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--grey);
+  }
+
+  /* ─── DIRECTOR QUOTE ─── */
+  .director-section {
+    background: var(--pink-pale);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    min-height: 520px;
+  }
+
+  .director-left {
+    padding: 80px 8vw;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .director-quote {
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 2vw, 26px);
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--dark);
+    margin-bottom: 32px;
+  }
+  .director-quote::before { content: '\201C'; font-size: 48px; color: var(--pink); line-height: 0; vertical-align: -0.3em; margin-right: 6px; }
+
+  .director-attr {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+  }
+
+  .director-right {
+    background: var(--pink);
+    display: flex; align-items: center; justify-content: center;
+    padding: 60px;
+    flex-direction: column;
+    text-align: center;
+    gap: 32px;
+  }
+
+  .director-name {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: white;
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+  .director-title {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+  }
+  .director-cred {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+    max-width: 320px;
+  }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    background: var(--dark);
+    text-align: center;
+    padding: 100px 8vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: 'IBDK';
+    font-family: var(--font-display);
+    font-size: 280px;
+    color: rgba(255,255,255,0.03);
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .cta-section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 64px);
+    color: white;
+    letter-spacing: 0.03em;
+    margin-bottom: 20px;
+  }
+  .cta-section h2 span { color: var(--pink); }
+  .cta-section p {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-style: italic;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 48px;
+    max-width: 520px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  .cta-actions {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  }
+
+  .btn-white {
+    background: white;
+    color: var(--dark);
+    padding: 16px 40px;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn-white:hover { background: var(--pink); color: white; }
+
+  .btn-ghost {
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 16px 40px;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-weight: 500;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn-ghost:hover { border-color: var(--pink); color: var(--pink); }
+
+  /* ─── NETWORKS ─── */
+  .networks-section { padding: 80px 8vw; }
+
+  .networks-logos {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-top: 40px; align-items: center;
+  }
+  .network-tag {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: 1px solid rgba(232,82,138,0.25);
+    color: var(--grey);
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .network-tag:hover { border-color: var(--pink); color: var(--pink); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--off-white);
+    padding: 60px 8vw 40px;
+    border-top: 1px solid rgba(232,82,138,0.15);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand .ibdk-f {
+    font-family: var(--font-display);
+    font-size: 36px;
+    color: var(--pink);
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .footer-brand .ibdk-full {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .footer-brand p {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--grey);
+    max-width: 280px;
+  }
+
+  .footer-col h5 {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a {
+    font-size: 13px;
+    color: var(--grey);
+    text-decoration: none;
+    transition: color 0.2s;
+    line-height: 1.5;
+  }
+  .footer-col a:hover { color: var(--pink); }
+
+  .footer-contact p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--grey);
+  }
+  .footer-contact a { color: var(--pink); text-decoration: none; }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(232,82,138,0.12);
+    font-size: 12px;
+    color: var(--grey);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-up-delay-1 { transition-delay: 0.1s; }
+  .fade-up-delay-2 { transition-delay: 0.2s; }
+  .fade-up-delay-3 { transition-delay: 0.3s; }
+  .fade-up-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 40vh; }
+    .hero-stat-block { width: 90%; }
+    .why-grid { grid-template-columns: 1fr; }
+    .studies-grid { grid-template-columns: 1fr 1fr; }
+    .approach-intro { grid-template-columns: 1fr; gap: 40px; }
+    .bcrads-layout { grid-template-columns: 1fr; }
+    .outreach-grid { grid-template-columns: 1fr; }
+    .director-section { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 5vw; }
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: white; padding: 20px 5vw 32px; border-bottom: 1px solid rgba(232,82,138,0.15); gap: 20px; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    section { padding: 72px 6vw; }
+    .studies-grid { grid-template-columns: 1fr; }
+    .why-left { padding: 48px 36px; }
+    .why-right { border: none; }
+    .why-item { padding: 28px 24px; }
+    .outreach-big { padding: 48px 36px; }
+    .outreach-list { padding: 48px 36px; }
+    .director-left { padding: 60px 6vw; }
+    .director-right { padding: 48px 6vw; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    .hero-left { padding: 60px 6vw; }
+    .team-grid { grid-template-columns: 1fr; }
+    .ach-grid { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── MOBILE NAV ─── */
+  .nav-links.open { display: flex !important; }
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">
+    <span class="ibdk">IBDK</span>
+    <span class="sub">Institute of Breast Disease, Kolkata</span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#approach">Research</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#outreach">Outreach</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact" class="nav-donate">Donate</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-tag fade-up">Focused Research · Scalable Solutions · Equitable Cancer Care</div>
+    <h1 class="fade-up fade-up-delay-1">
+      TRANSFORMING<br><span>BREAST</span><br>CANCER<br>CARE
+    </h1>
+    <p class="hero-sub fade-up fade-up-delay-2">
+      Through innovation, collaboration and education — for every woman, regardless of where she lives.
+    </p>
+    <div class="hero-actions fade-up fade-up-delay-3">
+      <a href="#mission" class="btn-primary">Our Mission →</a>
+      <a href="#contact" class="btn-outline">Support Us</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-bg-text">IBDK</div>
+      <div class="hero-stat-block">
+        <div class="hero-stat fade-up fade-up-delay-1">
+          <span class="stat-num">3,000+</span>
+          <span class="stat-label">Rural Healthcare Practitioners Trained</span>
+        </div>
+        <div class="hero-stat fade-up fade-up-delay-2">
+          <span class="stat-num">1.8L+</span>
+          <span class="stat-label">Students Reached via Project Pink Alert</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-quote">
+      <blockquote>Cancer should never be a verdict written by one's poverty or postcode.</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">Vanessa Moss Award 2025</span>
+    <span class="ticker-item">Top 20 Global Surgical Innovations</span>
+    <span class="ticker-item">UICC 2024 Showcase</span>
+    <span class="ticker-item">BCRADS — Globally Adopted</span>
+    <span class="ticker-item">WHO Surgical Safety Checklist Contributor</span>
+    <span class="ticker-item">3,000+ Practitioners Trained</span>
+    <span class="ticker-item">India's First Survivor-Led Navigation Programme</span>
+    <span class="ticker-item">Vanessa Moss Award 2025</span>
+    <span class="ticker-item">Top 20 Global Surgical Innovations</span>
+    <span class="ticker-item">UICC 2024 Showcase</span>
+    <span class="ticker-item">BCRADS — Globally Adopted</span>
+    <span class="ticker-item">WHO Surgical Safety Checklist Contributor</span>
+    <span class="ticker-item">3,000+ Practitioners Trained</span>
+    <span class="ticker-item">India's First Survivor-Led Navigation Programme</span>
+  </div>
+</div>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="section-label fade-up">Our Mission</div>
+  <h2 class="display fade-up fade-up-delay-1">WHY <span>WE</span><br>EXIST</h2>
+  <p class="lead fade-up fade-up-delay-2">
+    Breast cancer is now the most common cancer among Indian women. India's 5-year survival rate lingers around 65%—plummeting below 50% in rural areas. Over 60% of cases are detected at Stage 3 or 4. IBDK was founded to change this reality.
+  </p>
+
+  <div class="why-grid fade-up fade-up-delay-3">
+    <div class="why-left">
+      <div>
+        <div class="why-big-num">60%</div>
+        <div class="why-stat-big">STAGE 3–4</div>
+        <div class="why-stat-label">of breast cancer cases in India are detected late — when treatment is harder, costlier, and often too late.</div>
+      </div>
+      <div style="margin-top:48px;">
+        <div class="why-stat-big" style="font-size:40px;">65%</div>
+        <div class="why-stat-label">India's 5-year survival rate vs. 95%+ in high-income countries.</div>
+      </div>
+    </div>
+    <div class="why-right">
+      <div class="why-item">
+        <div class="why-icon">🔍</div>
+        <div>
+          <div class="why-title">LATE DIAGNOSIS</div>
+          <div class="why-desc">Most patients arrive at advanced stages, dramatically reducing survival odds.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🏥</div>
+        <div>
+          <div class="why-title">FRAGMENTED CARE</div>
+          <div class="why-desc">Siloed providers with no coordinated multidisciplinary approach to treatment.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">📋</div>
+        <div>
+          <div class="why-title">ABSENT PROTOCOLS</div>
+          <div class="why-desc">SOPs are often missing even in medical colleges. MDT-based care is rarely implemented.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">💸</div>
+        <div>
+          <div class="why-title">UNAFFORDABLE TREATMENT</div>
+          <div class="why-desc">Cost and accessibility barriers cause patients to abandon treatment midway.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIRECTOR -->
+<div class="director-section">
+  <div class="director-left">
+    <div class="section-label fade-up">From the Director's Desk</div>
+    <p class="director-quote fade-up fade-up-delay-1">
+      Cancer should never be a verdict written by one's poverty or postcode. Every individual — regardless of geography, income, or social standing — deserves the dignity of timely, quality care.
+    </p>
+    <div class="director-attr fade-up fade-up-delay-2">— Dr. Soumen Das, Director IBDK</div>
+    <p style="margin-top:24px; font-size:14px; line-height:1.75; color:var(--grey); max-width:480px;" class="fade-up fade-up-delay-3">
+      IBDK was born from this conviction. We exist to challenge the systemic disparities that define cancer care in LMICs and to develop solutions forged in the crucible of resource constraints. History has shown that innovation emerging from scarcity often sets the standard for progress.
+    </p>
+  </div>
+  <div class="director-right">
+    <div>
+      <div class="director-name">DR. SOUMEN DAS</div>
+      <div class="director-title" style="margin-top:8px;">Director, IBDK</div>
+    </div>
+    <p class="director-cred">
+      Breast and cancer surgeon with over two decades of clinical experience. First Indian to receive BRESO certification. FRCS (Glasgow) · FACS (USA). Trained at Tata Memorial Hospital, Mumbai & City of Hope Hospital, Los Angeles.
+    </p>
+  </div>
+</div>
+
+<!-- APPROACH -->
+<section id="approach" class="approach-section">
+  <div class="approach-intro">
+    <div>
+      <div class="section-label fade-up">Our Research</div>
+      <h2 class="display fade-up fade-up-delay-1">RESEARCH<br><span>DRIVEN.</span><br>PEOPLE<br>FOCUSED.</h2>
+    </div>
+    <div style="padding-top:40px;">
+      <p class="lead fade-up fade-up-delay-2" style="margin-bottom:24px;">
+        At the core of IBDK's model is a guiding principle: no system can be transformed until it is fully understood in all its dimensions.
+      </p>
+      <p style="font-size:14px; line-height:1.75; color:var(--grey); max-width:480px;" class="fade-up fade-up-delay-3">
+        We began by interrogating the system itself — tracing how women engage with it and where those engagements collapse. This rigorous inquiry exposed, with empirical clarity, the critical voids that continue to undermine breast cancer care in India.
+      </p>
+    </div>
+  </div>
+
+  <div class="studies-grid fade-up">
+    <div class="study-card">
+      <div class="study-num">01</div>
+      <div class="study-title">SOP BREAST 1 STUDY</div>
+      <div class="study-desc">Study on the presence and use of standardised treatment protocols.</div>
+      <div class="study-finding"><strong>Finding:</strong> SOPs are often missing, even in medical colleges. MDT-based care is rarely implemented.</div>
+    </div>
+    <div class="study-card">
+      <div class="study-num">02</div>
+      <div class="study-title">SOP BREAST 2 STUDY</div>
+      <div class="study-desc">Study of actual Multidisciplinary Team (MDT) practice.</div>
+      <div class="study-finding"><strong>Finding:</strong> In 67 of 92 cases reviewed, no MDT discussion took place. Treatment decisions were made without collective input.</div>
+    </div>
+    <div class="study-card">
+      <div class="study-num">03</div>
+      <div class="study-title">NAVIGATION STUDY</div>
+      <div class="study-desc">Explored why many patients discontinue treatment midway.</div>
+      <div class="study-finding"><strong>Finding:</strong> Lack of guidance, fear, and system complexity contribute more than cost alone.</div>
+    </div>
+    <div class="study-card">
+      <div class="study-num">04</div>
+      <div class="study-title">TREATMENT COMPLETION</div>
+      <div class="study-desc">Investigated barriers to finishing prescribed treatments.</div>
+      <div class="study-finding"><strong>Finding:</strong> Poor completion linked to inaccessibility, high cost, and adherence to non-modern practitioners.</div>
+    </div>
+    <div class="study-card">
+      <div class="study-num">05</div>
+      <div class="study-title">SURGICAL TECHNIQUE</div>
+      <div class="study-desc">Developed a cavity-sparing approach to reduce margin positivity in breast-conserving surgery.</div>
+      <div class="study-finding"><strong>Finding:</strong> Safe, effective, and cost-saving alternative.</div>
+    </div>
+    <div class="study-card" style="background:var(--pink-pale);">
+      <div class="study-num" style="color:rgba(232,82,138,0.2);">+</div>
+      <div class="study-title" style="color:var(--pink);">MORE AHEAD</div>
+      <div class="study-desc">PROMIS Study, IMPACT Study, and a state-of-the-art LMIC Cancer Research Facility under development.</div>
+      <div class="study-finding" style="border-color:rgba(232,82,138,0.25);"><strong style="color:var(--pink);">Coming soon</strong> — building the future of cancer care.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <div class="section-label fade-up">Patient & Practitioner Tools</div>
+  <h2 class="display fade-up fade-up-delay-1">TOOLS THAT<br><span>EMPOWER</span></h2>
+  <p class="lead fade-up fade-up-delay-2">IBDK develops simple, evidence-based tools that fit real-world Indian conditions.</p>
+
+  <div class="tools-grid">
+    <div class="tool-card fade-up">
+      <div class="tool-tag">Diagnostic Tool</div>
+      <div class="tool-name">KOLKATA MASTALGIA CHART</div>
+      <div class="tool-desc">A validated diagnostic tool that helps triage patients with breast pain, reducing unnecessary imaging and healthcare burden.</div>
+    </div>
+    <div class="tool-card fade-up fade-up-delay-1">
+      <div class="tool-tag">Patient App</div>
+      <div class="tool-name">ME APP</div>
+      <div class="tool-desc">Promotes regular self-examination through alert-based reminders, step-by-step guidance, and symptom tracking for early detection.</div>
+    </div>
+    <div class="tool-card fade-up fade-up-delay-2">
+      <div class="tool-tag">Digital Companion</div>
+      <div class="tool-name">CHEMOCARE APP</div>
+      <div class="tool-desc">Helps patients track chemotherapy side effects, monitor symptoms, and stay adherent to treatment schedules.</div>
+    </div>
+    <div class="tool-card fade-up fade-up-delay-3">
+      <div class="tool-tag">Surgical Framework</div>
+      <div class="tool-name">DAS'S CLASSIFICATION</div>
+      <div class="tool-desc">An anatomical framework developed by IBDK to guide safe axillary surgery and improve surgical outcomes across settings.</div>
+    </div>
+    <div class="tool-card fade-up">
+      <div class="tool-tag">Virtual Platform</div>
+      <div class="tool-name">MOLECULAR MDT</div>
+      <div class="tool-desc">A virtual multidisciplinary platform integrating molecular profiling into treatment decisions, making personalised care possible outside large hospitals.</div>
+    </div>
+    <div class="tool-card fade-up fade-up-delay-1">
+      <div class="tool-tag">Prosthetics</div>
+      <div class="tool-name">PROJECT SAMPURNA</div>
+      <div class="tool-desc">A soft, low-cost external mastectomy pad designed by breast cancer survivors. Sold with minimal margin, boosting comfort, self-confidence, and dignity after treatment.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BCRADS -->
+<section id="bcrads" class="bcrads-section">
+  <div class="section-label fade-up">Flagship Innovation</div>
+  <h2 class="display fade-up fade-up-delay-1" style="color:white;">BC<span>RADS</span></h2>
+  <p class="lead fade-up fade-up-delay-2">Breast Clinical Reporting and Data System — a clinician-led innovation standardising breast cancer assessment in low-resource, high-burden settings.</p>
+
+  <div class="bcrads-layout">
+    <div class="fade-up">
+      <h3 style="font-family:var(--font-display); font-size:22px; letter-spacing:0.05em; color:var(--pink-light); margin-bottom:16px;">SCORING SYSTEM</h3>
+      <p style="font-size:13px; color:rgba(255,255,255,0.6); line-height:1.7; margin-bottom:8px;">Clinical findings assessed using defined parameters — age, family history, prior radiation, breast asymmetry, skin or nipple changes, lump characteristics, and nodal findings — produce a clear clinical score.</p>
+      <table class="scoring-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Score</th>
+            <th>Interpretation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="score-cat">1</span></td><td class="score-score">0–2</td><td class="score-interp">Normal</td></tr>
+          <tr><td><span class="score-cat">2</span></td><td class="score-score">3–4</td><td class="score-interp">Benign</td></tr>
+          <tr><td><span class="score-cat">3</span></td><td class="score-score">5–6</td><td class="score-interp">Probably Benign</td></tr>
+          <tr><td><span class="score-cat">4</span></td><td class="score-score">7–9</td><td class="score-interp">Suspicious</td></tr>
+          <tr><td><span class="score-cat">5</span></td><td class="score-score">≥10</td><td class="score-interp">Highly Suggestive of Malignancy</td></tr>
+        </tbody>
+      </table>
+
+      <div class="award-badge fade-up" style="margin-top:32px;">
+        <div class="award-icon">🏆</div>
+        <div class="award-text">
+          <h4>VANESSA MOSS AWARD — LGCW 2025</h4>
+          <p>Received at London Global Cancer Week 2025 for clinical relevance and impact. Adopted across diverse settings including Nigeria, Peru, and other countries.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bcrads-matters fade-up fade-up-delay-1">
+      <h3 style="font-family:var(--font-display); font-size:22px; letter-spacing:0.05em; color:var(--pink-light); margin-bottom:28px;">WHY BCRADS MATTERS</h3>
+      <div class="bcrads-matter-item">
+        <div class="matter-num">01</div>
+        <div class="matter-text">
+          <h4>Standardises Clinical Breast Examination</h4>
+          <p>Consistent, reproducible scoring eliminates variability across settings and practitioners.</p>
+        </div>
+      </div>
+      <div class="bcrads-matter-item">
+        <div class="matter-num">02</div>
+        <div class="matter-text">
+          <h4>Reduces Subjectivity in Assessment</h4>
+          <p>Defined parameters replace intuition with a structured, evidence-based clinical framework.</p>
+        </div>
+      </div>
+      <div class="bcrads-matter-item">
+        <div class="matter-num">03</div>
+        <div class="matter-text">
+          <h4>Enables Early Risk Stratification Without Imaging</h4>
+          <p>Critical for resource-constrained settings where imaging access is limited or absent.</p>
+        </div>
+      </div>
+      <div class="bcrads-matter-item">
+        <div class="matter-num">04</div>
+        <div class="matter-text">
+          <h4>Supports Timely Referral & Continuity of Care</h4>
+          <p>Each category links to a specific clinical action, from routine follow-up to fast-track referral.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTREACH -->
+<section id="outreach">
+  <div class="section-label fade-up">Community Outreach</div>
+  <h2 class="display fade-up fade-up-delay-1">TOWARD MORE<br><span>TIMELY</span><br>AWARENESS</h2>
+
+  <div class="outreach-grid fade-up fade-up-delay-2">
+    <div class="outreach-big">
+      <div class="big-num">1.8L+</div>
+      <div class="big-label">School Students Reached</div>
+      <p>Project Pink Alert — India's largest breast health awareness campaign for school and college students. Conducted across urban and rural schools, focusing on self-awareness, early signs, and stigma reduction.</p>
+      <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
+        <div style="border:1px solid rgba(255,255,255,0.3); padding:12px 20px;">
+          <div style="font-family:var(--font-display); font-size:28px;">3,000+</div>
+          <div style="font-size:11px; opacity:0.7; letter-spacing:0.15em; text-transform:uppercase;">Practitioners Trained</div>
+        </div>
+        <div style="border:1px solid rgba(255,255,255,0.3); padding:12px 20px;">
+          <div style="font-family:var(--font-display); font-size:28px;">5 STUDIES</div>
+          <div style="font-size:11px; opacity:0.7; letter-spacing:0.15em; text-transform:uppercase;">Published Research</div>
+        </div>
+      </div>
+    </div>
+    <div class="outreach-list">
+      <div class="outreach-item">
+        <div class="outreach-num">01</div>
+        <div class="outreach-content">
+          <h4>Project Pink Alert</h4>
+          <p>India's largest school breast health campaign — urban and rural schools across Bengal.</p>
+        </div>
+      </div>
+      <div class="outreach-item">
+        <div class="outreach-num">02</div>
+        <div class="outreach-content">
+          <h4>Jiboner Sathi</h4>
+          <p>India's first survivor-led breast cancer navigation programme. Patients paired with trained survivors through diagnosis, treatment and recovery.</p>
+        </div>
+      </div>
+      <div class="outreach-item">
+        <div class="outreach-num">03</div>
+        <div class="outreach-content">
+          <h4>Core Biopsy Training</h4>
+          <p>Practical, protocol-driven programme for pathologists, radiologists, surgeons and gynaecologists in district hospitals.</p>
+        </div>
+      </div>
+      <div class="outreach-item">
+        <div class="outreach-num">04</div>
+        <div class="outreach-content">
+          <h4>Clinical Breast Examination Course</h4>
+          <p>Structured module teaching lump identification, characterisation, and lymph node assessment using a low-cost breast model (₹5,000 vs ₹25,000–50,000 standard).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section style="background:var(--off-white); padding:100px 8vw;">
+  <div class="section-label fade-up">Recognition</div>
+  <h2 class="display fade-up fade-up-delay-1">SETTING NEW<br><span>STANDARDS</span></h2>
+
+  <div class="ach-grid fade-up fade-up-delay-2">
+    <div class="ach-card">
+      <span class="ach-icon">⭐</span>
+      <div class="ach-title">TOP 20 GLOBAL SURGICAL INNOVATIONS 2025</div>
+      <div class="ach-desc">Recognised by the American College of Surgeons for developing a breast examination training model that reduces cost manifold — making hands-on training widely accessible.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">🌐</span>
+      <div class="ach-title">SHOWCASED AT UICC 2024</div>
+      <div class="ach-desc">Our early detection training model was featured at the Union for International Cancer Control, positioning India as a leader in affordable, scalable cancer care.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">🏆</span>
+      <div class="ach-title">VANESSA MOSS AWARD — LGCW 2025</div>
+      <div class="ach-desc">Awarded at London Global Cancer Week 2025 for cancer health disparity work. BCRADS has since been adopted in Nigeria, Peru, and other countries.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">📊</span>
+      <div class="ach-title">DAS–MANDAL INDEX</div>
+      <div class="ach-desc">A first-of-its-kind scorecard to benchmark cancer care across centres, using indicators like chemotherapy access, delays, stock-outs, and out-of-pocket costs.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">🔬</span>
+      <div class="ach-title">WHO SURGICAL SAFETY CHECKLIST</div>
+      <div class="ach-desc">As a member of the NCCN International Review Board, IBDK helped introduce a new global checkpoint: "Is MDT done?" — improving cancer surgery outcomes worldwide.</div>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">📰</span>
+      <div class="ach-title">SOP BREAST 1 STUDY — UICC</div>
+      <div class="ach-desc">Our research revealing gaps in protocol and MDT usage was accepted at UICC — informing reforms in breast cancer training and care pathways globally.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="team-section">
+  <div class="section-label fade-up">Leadership</div>
+  <h2 class="display fade-up fade-up-delay-1">OUR <span>TEAM</span></h2>
+  <p class="lead fade-up fade-up-delay-2">A committed, multidisciplinary team of experts in breast surgery, oncology, imaging, pathology, radiation therapy, digital innovation, palliative care, and public health.</p>
+
+  <div class="team-grid fade-up fade-up-delay-3">
+    <div class="team-card">
+      <div class="team-role">Director · Founder</div>
+      <div class="team-name">DR. SOUMEN DAS</div>
+      <div class="team-bio">Breast and cancer surgeon, over two decades of clinical experience. Graduate of Calcutta Medical College. Trained at Tata Memorial Hospital and City of Hope Hospital, LA. BRESO certified (first Indian), FRCS (Glasgow), FACS (USA).</div>
+    </div>
+    <div class="team-card">
+      <div class="team-role">Director · Medical Oncologist</div>
+      <div class="team-name">DR. TANMOY K. MONDAL</div>
+      <div class="team-bio">Senior medical oncologist, Manipal Hospital. MBBS at N.R.S. Medical College, MD General Medicine from CNMC, DM Medical Oncology from Tata Memorial Hospital. MRCP, ESMO, DrNB certified. Specialises in chemotherapy, immunotherapy and CAR T cell therapy.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-role">Director · International Partnership & AI</div>
+      <div class="team-name">KANAD BASU, PH.D</div>
+      <div class="team-bio">AI scientist and educator, nearly two decades in data science and AI. PhD in Computational and Applied Mathematics from University of South Carolina. Professor of Practice, USC Marshall School of Business. Advances AI-enabled approaches to equitable cancer care.</div>
+    </div>
+    <div class="team-card" style="background:var(--pink); border:none;">
+      <div class="team-role" style="color:rgba(255,255,255,0.7);">Scientific Advisor</div>
+      <div class="team-name" style="color:white;">PROF. BHRAMAR MUKHERJEE</div>
+      <div class="team-bio" style="color:rgba(255,255,255,0.8);">Anna M.R. Lauder Professor of Biostatistics at Yale School of Public Health. Inaugural Senior Associate Dean for Public Health Data Science and Data Equity. Guides IBDK's scientific direction, grounded in rigour, equity, and accessible data-driven healthcare.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-role">Brand Ambassador</div>
+      <div class="team-name">PROF. RANGINA HAMIDI</div>
+      <div class="team-bio">Prominent Afghan educator, women's rights advocate, and former Minister of Education of Afghanistan — the first woman to hold the post in over 30 years. Founder of Kandahar Treasure. Brings powerful global insight and deep commitment to education and equity.</div>
+    </div>
+    <div class="team-card" style="border-left-color:var(--pink-light);">
+      <div class="team-role" style="color:var(--grey);">Core Group & Honorary Advisors</div>
+      <div class="team-name" style="font-size:18px; line-height:1.4;">MULTIDISCIPLINARY BOARD</div>
+      <div class="team-bio">Dr. Sayantan Mukhopadhyay · Dr. Debjoy Sau · Dr. Sukhamoy Barik · Mr. V.S. Binayak · Dr. Anowar Ali Mallick · Dr. Sayan Paul · Dr. Poulami Basu · Dr. Rahul Agarwal · Dr. R.R. Mandal · Dr. D.K. Sarkar · Dr. Sanjit Agarwal · Dr. Srikanta Goswami</div>
+    </div>
+  </div>
+</section>
+
+<!-- NETWORKS -->
+<section class="networks-section" style="padding:80px 8vw; background:var(--white);">
+  <div class="section-label fade-up">Networks & Collaborations</div>
+  <h2 class="display fade-up fade-up-delay-1">GLOBAL <span>REACH</span></h2>
+  <p class="lead fade-up fade-up-delay-2">IBDK is an active member of key international platforms that shape cancer policy, research, and care.</p>
+  <div class="networks-logos fade-up fade-up-delay-3">
+    <span class="network-tag">Breast Centres Network (BCN)</span>
+    <span class="network-tag">NCD Alliance</span>
+    <span class="network-tag">UICC</span>
+    <span class="network-tag">ABC GlobAlliance</span>
+    <span class="network-tag">Breast International Group (BIG)</span>
+    <span class="network-tag">National Breast Imaging Academy (UK)</span>
+    <span class="network-tag">Indian Statistical Institute (Kolkata)</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2 class="fade-up">BE PART OF THE <span>CHANGE</span></h2>
+  <p class="fade-up fade-up-delay-1">Whether you're a doctor, policymaker, student, survivor, or concerned citizen — you can help reshape the future of breast cancer care.</p>
+  <div class="cta-actions fade-up fade-up-delay-2">
+    <a href="mailto:instituteofbreastdisease@gmail.com" class="btn-white">Donate Now →</a>
+    <a href="mailto:instituteofbreastdisease@gmail.com" class="btn-ghost">Collaborate With Us</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="ibdk-f">IBDK</span>
+      <span class="ibdk-full">Institute of Breast Disease, Kolkata</span>
+      <p>Focused Research. Scalable Solutions. Equitable Cancer Care for All.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="#mission">Mission & Vision</a></li>
+        <li><a href="#approach">Our Research</a></li>
+        <li><a href="#tools">Tools & Innovation</a></li>
+        <li><a href="#outreach">Community Outreach</a></li>
+        <li><a href="#team">Our Team</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Programs</h5>
+      <ul>
+        <li><a href="#tools">BCRADS System</a></li>
+        <li><a href="#tools">Jiboner Sathi</a></li>
+        <li><a href="#tools">Project Pink Alert</a></li>
+        <li><a href="#tools">Project Sampurna</a></li>
+        <li><a href="#tools">Core Biopsy Training</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h5>Contact</h5>
+      <p>
+        Kolkata, India<br><br>
+        <a href="tel:+916289548955">+91 62895 48955</a><br>
+        <a href="mailto:instituteofbreastdisease@gmail.com">instituteofbreastdisease@gmail.com</a><br><br>
+        <a href="https://instituteofbreastdisease.org" target="_blank">www.instituteofbreastdisease.org</a>
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Institute of Breast Disease, Kolkata. All rights reserved.</span>
+    <span style="font-family:var(--font-serif); font-style:italic; color:var(--pink);">Focused Research. Scalable Solutions. Equitable Cancer Care for All.</span>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for fade-up
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Nav toggle
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('mainNav');
+    if (window.scrollY > 40) {
+      nav.style.boxShadow = '0 2px 24px rgba(232,82,138,0.08)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+
+  // Close nav on link click (mobile)
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
